@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotic Mower Readiness Survey</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+        .survey-container { max-width: 700px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        .question { margin-bottom: 20px; }
+        .slider-label { display: flex; justify-content: space-between; font-size: 0.9em; color: #666; }
+        .score-output { font-weight: bold; color: #2c3e50; }
+        #final-score { font-size: 1.5em; margin-top: 20px; font-weight: bold; text-align: center; }
+        #readiness-level { text-align: center; font-weight: bold; color: #27ae60; }
+        .icon { margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="survey-container">
+        <h2>Robotic Mower Readiness Survey</h2>
+        <p>Assess your golf course or sports field’s suitability for robotic mowing. Adjust the sliders based on current conditions.</p>
+        <form id="survey-form">
+            <div class="question">
+                <label>🌄 Terrain & Slope Severity</label>
+                <p>How steep or flat is the mowing area? Steep slopes may limit robotic mower effectiveness and viability. Localized severe hills can be handled with specialized robotic mower models.</p>
+                <input type="range" min="0" max="20" value="10" class="slider" id="slope">
+                <div class="slider-label"><span>Steep</span><span>Flat</span></div>
+            </div>
+            <div class="question">
+                <label>🔌 Power Infrastructure</label>
+                <p>Availability of power sources for charging stations across desired mowing areas. More options = more efficient charging station placement.</p>
+                <input type="range" min="0" max="20" value="10" class="slider" id="power">
+                <div class="slider-label"><span>Poor</span><span>Excellent</span></div>
+            </div>
+            <div class="question">
+                <label>📶 Connectivity & Cellular Coverage</label>
+                <p>Reliable cellular signal improves full course connectivity opportunities. <b>Highly viable workarounds do exist for poor cell coverage.</b></p>
+                <input type="range" min="0" max="15" value="7" class="slider" id="connectivity">
+                <div class="slider-label"><span>Weak</span><span>Strong</span></div>
+            </div>
+            <div class="question">
+                <label>🌳 Tree Coverage & RTK Interference</label>
+                <p>Dense tree cover can interfere with RTK reception. Physical obstacles such as trees will decrease mower efficiency, but can be mapped as "no-mow" zones.</p>
+                <input type="range" min="0" max="15" value="7" class="slider" id="trees">
+                <div class="slider-label"><span>Dense</span><span>Open</span></div>
+            </div>
+            <div class="question">
+                <label>⛳ Golf Course/Property Layout</label>
+                <p>Are the mowing areas connected or separated?</p>
+                <input type="range" min="0" max="15" value="7" class="slider" id="layout">
+                <div class="slider-label"><span>Separated</span><span>Connected</span></div>
+            </div>
+            <div class="question">
+                <label>🚶 Traffic & Play Disruptions</label>
+                <p>How often are mowing areas occupied by players or events? Will you be able to mow during play?</p>
+                <input type="range" min="0" max="10" value="5" class="slider" id="traffic">
+                <div class="slider-label"><span>Busy</span><span>Flexible</span></div>
+            </div>
+        </form>
+        <p id="final-score">Total Score: <span class="score-output">0</span></p>
+        <p id="readiness-level"></p>
+    </div>
+
+    <script>
+        function calculateScore() {
+            let totalScore = 0;
+            document.querySelectorAll('.slider').forEach(slider => {
+                totalScore += parseInt(slider.value);
+            });
+            
+            document.querySelector('.score-output').textContent = totalScore;
+            let readiness = "";
+            if (totalScore >= 80) readiness = "✅ Excellent Readiness: Your site is highly suited for robotic mowing on a full-course scale!";
+            else if (totalScore >= 60) readiness = "🟡 Good Readiness: Some modifications may be required to get where you want to be on a larger scale for adoption.";
+            else if (totalScore >= 40) readiness = "🟠 Moderate Readiness: Significant adjustments needed to achieve long-term adoption across the property. Start with 'low hanging' fruit and go from there.";
+            else readiness = "❌ Not Ready: Major obstacles prevent effective robotic mowing. Consider different styles of robotic mowing such as retrofitting current fairway units with assisted driving or auto-steer.";
+            
+            document.getElementById('readiness-level').textContent = readiness;
+        }
+
+        document.querySelectorAll('.slider').forEach(slider => {
+            slider.addEventListener('input', calculateScore);
+        });
+
+        calculateScore();
+    </script>
+</body>
+</html>
