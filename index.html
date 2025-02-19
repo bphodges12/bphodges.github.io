@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robotic Mower Readiness Survey</title>
+    <title>Robotic Mower Readiness & Recommendation Survey</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
         .survey-container { max-width: 700px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
@@ -13,11 +13,12 @@
         #final-score { font-size: 1.5em; margin-top: 20px; font-weight: bold; text-align: center; }
         #readiness-level { text-align: center; font-weight: bold; color: #27ae60; }
         .icon { margin-right: 10px; }
+        input[type="range"] { width: 100%; }
     </style>
 </head>
 <body>
     <div class="survey-container">
-        <h2>Robotic Mower Readiness Survey</h2>
+        <h2>Robotic Mower Readiness & Recommendation Survey</h2>
         <p>Assess your golf course or sports field’s suitability for robotic mowing. Adjust the sliders based on current conditions.</p>
         <form id="survey-form">
             <div class="question">
@@ -34,7 +35,7 @@
             </div>
             <div class="question">
                 <label>📶 Connectivity & Cellular Coverage</label>
-                <p>Reliable cellular signal improves full course connectivity opportunities. <b>Highly viable workarounds do exist for poor cell coverage.</b></p>
+                <p>Reliable cellular signal improves full course connectivity opportunities. Highly viable workarounds do exist for poor cell coverage.</p>
                 <input type="range" min="0" max="15" value="7" class="slider" id="connectivity">
                 <div class="slider-label"><span>Weak</span><span>Strong</span></div>
             </div>
@@ -56,6 +57,24 @@
                 <input type="range" min="0" max="10" value="5" class="slider" id="traffic">
                 <div class="slider-label"><span>Busy</span><span>Flexible</span></div>
             </div>
+            <div class="question">
+                <label>💧 Water & Drainage</label>
+                <p>Poor drainage may limit mowing in wet conditions.</p>
+                <input type="range" min="0" max="10" value="5" class="slider" id="drainage">
+                <div class="slider-label"><span>Poor</span><span>Excellent</span></div>
+            </div>
+            <div class="question">
+                <label>🚧 Boundary Management & Hazards</label>
+                <p>Are there clear perimeters and safe mowing zones? Will the mower be required to navigate complex obstacles? Are these obstacles moved daily?</p>
+                <input type="range" min="0" max="10" value="5" class="slider" id="boundaries">
+                <div class="slider-label"><span>Risky</span><span>Clear</span></div>
+            </div>
+            <div class="question">
+                <label>🔐 Vandalism & Security</label>
+                <p>Risk of damage or theft in public areas. Will you be able to mow at night? Will you require garages? Drop and go mowers will allow for additional security vs. self-docking.</p>
+                <input type="range" min="0" max="10" value="5" class="slider" id="security">
+                <div class="slider-label"><span>High Risk</span><span>Secure</span></div>
+            </div>
         </form>
         <p id="final-score">Total Score: <span class="score-output">0</span></p>
         <p id="readiness-level"></p>
@@ -65,23 +84,21 @@
         function calculateScore() {
             let totalScore = 0;
             document.querySelectorAll('.slider').forEach(slider => {
-                totalScore += parseInt(slider.value);
+                totalScore += parseInt(slider.value) || 0;
             });
             
             document.querySelector('.score-output').textContent = totalScore;
             let readiness = "";
             if (totalScore >= 80) readiness = "✅ Excellent Readiness: Your site is highly suited for robotic mowing on a full-course scale!";
             else if (totalScore >= 60) readiness = "🟡 Good Readiness: Some modifications may be required to get where you want to be on a larger scale for adoption.";
-            else if (totalScore >= 40) readiness = "🟠 Moderate Readiness: Significant adjustments needed to achieve long-term adoption across the property. Start with 'low hanging' fruit and go from there.";
-            else readiness = "❌ Not Ready: Major obstacles prevent effective robotic mowing. Consider different styles of robotic mowing such as retrofitting current fairway units with assisted driving or auto-steer.";
+            else if (totalScore >= 40) readiness = "🟠 Moderate Readiness: Significant adjustments needed to achieve long-term adoption across the property. Start with low-hanging fruit and go from there.";
+            else readiness = "❌ Not Ready: Major obstacles prevent effective robotic mowing.";
             
             document.getElementById('readiness-level').textContent = readiness;
         }
-
         document.querySelectorAll('.slider').forEach(slider => {
             slider.addEventListener('input', calculateScore);
         });
-
         calculateScore();
     </script>
 </body>
