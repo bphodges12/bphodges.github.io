@@ -55,11 +55,11 @@
                 <label>🚶 Traffic & Play Disruptions</label>
                 <p>How often are mowing areas occupied by players or events? Will you be able to mow during play?</p>
                 <input type="range" min="0" max="10" value="5" class="slider" id="traffic">
-                <div class="slider-label"><span>Busy</span><span>Flexible</span></div>
+                <div class="slider-label"><span>Restricted Mowing Time</span><span>24/7 Mow Time</span></div>
             </div>
             <div class="question">
                 <label>💧 Water & Drainage</label>
-                <p>Poor drainage may limit mowing in wet conditions.</p>
+                <p>Poor drainage may limit mowing in wet areas, and create difficult travel conditions for robots.</p>
                 <input type="range" min="0" max="10" value="5" class="slider" id="drainage">
                 <div class="slider-label"><span>Poor</span><span>Excellent</span></div>
             </div>
@@ -67,13 +67,13 @@
                 <label>🚧 Boundary Management & Hazards</label>
                 <p>Are there clear perimeters and safe mowing zones? Will the mower be required to navigate complex obstacles? Are these obstacles moved daily?</p>
                 <input type="range" min="0" max="10" value="5" class="slider" id="boundaries">
-                <div class="slider-label"><span>Risky</span><span>Clear</span></div>
+                <div class="slider-label"><span>Complex w/ Many Obstacles</span><span>Clear & Open</span></div>
             </div>
             <div class="question">
                 <label>🔐 Vandalism & Security</label>
                 <p>Risk of damage or theft in public areas. Will you be able to mow at night? Will you require garages? Drop and go mowers will allow for additional security vs. self-docking.</p>
                 <input type="range" min="0" max="10" value="5" class="slider" id="security">
-                <div class="slider-label"><span>High Risk</span><span>Secure</span></div>
+                <div class="slider-label"><span>High Risk of Theft/Vandalism</span><span>Secure Area w/ Low Risk</span></div>
             </div>
         </form>
         <p id="final-score">Total Score: <span class="score-output">0</span></p>
