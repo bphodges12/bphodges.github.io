@@ -20,7 +20,8 @@
     <div class="survey-container">
         <h2>Robotic Mower Readiness & Recommendation Survey</h2>
         <p>This survey helps assess how ready your golf course or sports field is for robotic mower adoption. A high total score means fewer barriers to full-scale implementation, while a lower score does not mean it's impossible—it simply indicates that additional adjustments and workarounds will be required to make robotic mowing viable. This tool helps identify key areas for improvement and guides decision-making for your course or property.</p>
-        <form id="survey-form">
+    <form action="https://docs.google.com/forms/d/e/1fmk81ekY_FkkVD2SItvSFu0VYA4a7KBCX7OAwzPCn7g/formResponse" method="POST" target="_blank">
+
             <div class="question">
                 <label>🌄 Terrain & Slope Severity</label>
                 <p>How steep or flat is the mowing area? Steep slopes may limit robotic mower effectiveness and viability. Localized severe hills can be handled with specialized robotic mower models.</p>
@@ -89,10 +90,11 @@
             
             document.querySelector('.score-output').textContent = totalScore;
             let readiness = "";
-            if (totalScore >= 80) readiness = "✅ Excellent Readiness: Your site is highly suited for robotic mowing on a full-course scale!";
-            else if (totalScore >= 60) readiness = "🟡 Good Readiness: Some modifications may be required to get where you want to be on a larger scale for adoption.";
-            else if (totalScore >= 40) readiness = "🟠 Moderate Readiness: Significant adjustments needed to achieve long-term adoption across the property. Start with low-hanging fruit and go from there.";
-            else readiness = "❌ Not Ready: Major obstacles prevent effective robotic mowing.";
+            if (totalScore >= 80) readiness = "✅ Excellent Readiness: Your site is well-suited for robotic mowing, but full implementation may require significant infrastructure investments such as enhanced power accessibility and connectivity solutions.";
+            else if (totalScore >= 60) readiness = "🟡 Good Readiness: Your property is mostly compatible with robotic mowing, but some infrastructure adjustments—such as additional charging stations or improved connectivity—may be needed for large-scale adoption.";
+            else if (totalScore >= 40) readiness = "🟠 Moderate Readiness: While robotic mowing is possible, achieving efficiency across the entire property will require significant investments in power, connectivity, or layout adjustments to minimize operational challenges.";
+            else readiness = "❌ Not Ready: Substantial barriers exist that prevent effective robotic mowing. Overcoming these challenges would require major changes, including costly upgrades to infrastructure, redesigning mowing zones, and enhancing connectivity.";
+            
             
             document.getElementById('readiness-level').textContent = readiness;
         }
