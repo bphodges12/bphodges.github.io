@@ -140,16 +140,17 @@
     </script>
 <div class="container">
         <h2>Golf Course Mowing ROI Calculator</h2>
+           <div class="input-group">
+            <label>Total Acres Maintained</label>
+            <input type="number" id="acres" value="1" />
+        </div>
         <div class="input-group">
             <label>Traditional Mowing Initial Cost ($)</label>
             <input type="number" id="traditionalCost" value="0" />
         </div>
+    
         <div class="input-group">
-            <label>Robotic Mowing Initial Cost ($)</label>
-            <input type="number" id="roboticCost" value="0" />
-        </div>
-        <div class="input-group">
-            <label>Fuel Consumed per Mowing Event (gallons)</label>
+            <label>Fuel Consumed per Traditional Mowing Event (gallons)</label>
             <input type="number" id="traditionalFuelPerEvent" value="0" />
         </div>
         <div class="input-group">
@@ -172,9 +173,22 @@
             <label>Traditional Labor Hours per Mowing Event</label>
             <input type="number" id="traditionalLaborHours" value="0" />
         </div>
+ 
         <div class="input-group">
-            <label>Total Acres Maintained</label>
-            <input type="number" id="acres" value="1" />
+            <label>Robotic Mowing Initial Cost ($/unit)</label>
+            <input type="number" id="roboticCost" value="12,000" />
+        </div>
+        <div class="input-group">
+            <label>Robots Needed for Sufficient Coverage</label>
+            <input type="number" id="roboticUnits" value="5" />
+        </div>
+         <div class="input-group">
+            <label>Robotic Mowing Electricity Cost ($/unit/year)</label>
+            <input type="number" id="roboticFuel" value="500" />
+        </div>
+       <div class="input-group">
+            <label>Robotic Mowing Maintenance & Troubleshooting Labor Hours (hours/week/unit)</label>
+            <input type="number" id="roboticMaint" value="0.5" />
         </div>
         <button onclick="calculateROI()">Calculate</button>
         <div class="result" id="results"></div>
@@ -189,13 +203,13 @@
             let traditionalMowingWeeks = parseFloat(document.getElementById('traditionalMowingWeeks').value) || 0;
             let traditionalLaborRate = parseFloat(document.getElementById('traditionalLaborRate').value) || 0;
             let traditionalLaborHours = parseFloat(document.getElementById('traditionalLaborHours').value) || 0;
-            let acres = parseFloat(document.getElementById('acres').value) || 1;
+            let acres = parseFloat(document.getElementById('acres').value) || 50;
             
             let traditionalFuel = traditionalFuelPerEvent * fuelCostPerGallon * traditionalMowingEvents * traditionalMowingWeeks;
             let traditionalLabor = traditionalLaborRate * traditionalLaborHours * traditionalMowingEvents * traditionalMowingWeeks;
             let traditionalOperating = traditionalFuel + traditionalLabor;
             let traditionalPerAcre = (traditionalCost / acres) + (traditionalOperating / acres);
-            let roboticPerAcre = (roboticCost / acres);
+            let roboticPerAcre = ((roboticCost * roboticUnits) + (roboticFuel * roboticUnits) +(roboticMaint * roboticUnits * traditionalMowingWeeks))/acres;
             let roiYears = roboticCost / (traditionalOperating);
             
             document.getElementById('results').innerHTML = `
