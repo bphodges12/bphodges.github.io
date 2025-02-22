@@ -195,32 +195,34 @@
     </div>
     <script>
         function calculateROI() {
-            let traditionalCost = parseFloat(document.getElementById('traditionalCost').value) || 0;
-            let roboticUnits = parseFloat(document.getElementById('roboticUnits').value) || 5;
-            let roboticFuel = parseFloat(document.getElementById('roboticFuel').value) || 500;
-            let roboticCost = parseFloat(document.getElementById('roboticCost').value) || 12,000;
-            let roboticMaint = parseFloat(document.getElementById('roboticMaint').value) || 0.5;
-            let traditionalFuelPerEvent = parseFloat(document.getElementById('traditionalFuelPerEvent').value) || 0;
-            let fuelCostPerGallon = parseFloat(document.getElementById('fuelCostPerGallon').value) || 0;
-            let traditionalMowingEvents = parseFloat(document.getElementById('traditionalMowingEvents').value) || 0;
-            let traditionalMowingWeeks = parseFloat(document.getElementById('traditionalMowingWeeks').value) || 0;
-            let traditionalLaborRate = parseFloat(document.getElementById('traditionalLaborRate').value) || 0;
-            let traditionalLaborHours = parseFloat(document.getElementById('traditionalLaborHours').value) || 0;
-            let acres = parseFloat(document.getElementById('acres').value) || 50;
-            
-            let traditionalFuel = traditionalFuelPerEvent * fuelCostPerGallon * traditionalMowingEvents * traditionalMowingWeeks;
-            let traditionalLabor = traditionalLaborRate * traditionalLaborHours * traditionalMowingEvents * traditionalMowingWeeks;
-            let traditionalOperating = traditionalFuel + traditionalLabor;
-            let traditionalPerAcre = (traditionalCost / acres) + (traditionalOperating / acres);
-            let roboticPerAcre = (((roboticCost * roboticUnits) + (roboticFuel * roboticUnits) +(roboticMaint * roboticUnits * traditionalMowingWeeks)) / acres);
-            let roiYears = roboticCost / (traditionalOperating);
-            
-            document.getElementById('results').innerHTML = `
-                <p>Traditional Cost per Acre per Year: $${traditionalPerAcre.toFixed(2)}</p>
-                <p>Robotic Cost per Acre per Year: $${roboticPerAcre.toFixed(2)}</p>
-                <p>ROI Break-even (years): ${roiYears > 0 ? roiYears.toFixed(2) : "N/A"}</p>
-            `;
-        }
+    let traditionalCost = parseFloat(document.getElementById('traditionalCost').value) || 0;
+    let roboticUnits = parseFloat(document.getElementById('roboticUnits').value) || 5;
+    let roboticFuel = parseFloat(document.getElementById('roboticFuel').value) || 500;
+    let roboticCost = parseFloat(document.getElementById('roboticCost').value.replace(/,/g, '')) || 12000;
+    let roboticMaint = parseFloat(document.getElementById('roboticMaint').value) || 0.5;
+    let traditionalFuelPerEvent = parseFloat(document.getElementById('traditionalFuelPerEvent').value) || 0;
+    let fuelCostPerGallon = parseFloat(document.getElementById('fuelCostPerGallon').value) || 0;
+    let traditionalMowingEvents = parseFloat(document.getElementById('traditionalMowingEvents').value) || 0;
+    let traditionalMowingWeeks = parseFloat(document.getElementById('traditionalMowingWeeks').value) || 0;
+    let traditionalLaborRate = parseFloat(document.getElementById('traditionalLaborRate').value) || 0;
+    let traditionalLaborHours = parseFloat(document.getElementById('traditionalLaborHours').value) || 0;
+    let acres = parseFloat(document.getElementById('acres').value) || 50;
+
+    let traditionalFuel = traditionalFuelPerEvent * fuelCostPerGallon * traditionalMowingEvents * traditionalMowingWeeks;
+    let traditionalLabor = traditionalLaborRate * traditionalLaborHours * traditionalMowingEvents * traditionalMowingWeeks;
+    let traditionalOperating = traditionalFuel + traditionalLabor;
+    
+    let traditionalPerAcre = acres > 0 ? ((traditionalCost + traditionalOperating) / acres) : 0;
+    let roboticPerAcre = acres > 0 ? (((roboticCost * roboticUnits) + (roboticFuel * roboticUnits) + (roboticMaint * roboticUnits * traditionalMowingWeeks)) / acres) : 0;
+    
+    let roiYears = traditionalOperating > 0 ? (roboticCost / traditionalOperating) : "N/A";
+
+    document.getElementById('results').innerHTML = `
+        <p>Traditional Cost per Acre per Year: $${traditionalPerAcre.toFixed(2)}</p>
+        <p>Robotic Cost per Acre per Year: $${roboticPerAcre.toFixed(2)}</p>
+        <p>ROI Break-even (years): ${roiYears !== "N/A" ? roiYears.toFixed(2) : "N/A"}</p>
+    `;
+}
     </script>
 </body>
 </html>
