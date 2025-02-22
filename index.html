@@ -142,7 +142,7 @@
         <h2>Golf Course Mowing ROI Calculator</h2>
            <div class="input-group">
             <label>Total Acres Maintained</label>
-            <input type="number" id="acres" value="1" />
+            <input type="number" id="acres" value="50" />
         </div>
         <div class="input-group">
             <label>Traditional Mowing Initial Cost ($)</label>
@@ -199,7 +199,7 @@
             let roboticUnits = parseFloat(document.getElementById('roboticUnits').value) || 5;
             let roboticFuel = parseFloat(document.getElementById('roboticFuel').value) || 500;
             let roboticCost = parseFloat(document.getElementById('roboticCost').value) || 12,000;
-                    let roboticMaint = parseFloat(document.getElementById('roboticMaint').value) || 0.5;
+            let roboticMaint = parseFloat(document.getElementById('roboticMaint').value) || 0.5;
             let traditionalFuelPerEvent = parseFloat(document.getElementById('traditionalFuelPerEvent').value) || 0;
             let fuelCostPerGallon = parseFloat(document.getElementById('fuelCostPerGallon').value) || 0;
             let traditionalMowingEvents = parseFloat(document.getElementById('traditionalMowingEvents').value) || 0;
