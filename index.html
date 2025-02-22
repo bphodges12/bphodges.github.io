@@ -14,6 +14,35 @@
         #readiness-level { text-align: center; font-weight: bold; color: #27ae60; }
         .icon { margin-right: 10px; }
         input[type="range"] { width: 75%; }
+          .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -109,121 +138,72 @@
         });
         calculateScore();
     </script>
-
-    import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-
-export default function ROICalculatorPage() {
-  const [traditionalCost, setTraditionalCost] = useState(0);
-  const [roboticCost, setRoboticCost] = useState(0);
-  const [acres, setAcres] = useState(1);
-
-  const [traditionalFuelPerEvent, setTraditionalFuelPerEvent] = useState(0);
-  const [fuelCostPerGallon, setFuelCostPerGallon] = useState(0);
-  const [traditionalMowingEvents, setTraditionalMowingEvents] = useState(0);
-  const [traditionalMowingWeeks, setTraditionalMowingWeeks] = useState(0);
-  const [traditionalMaintenance, setTraditionalMaintenance] = useState(0);
-
-  const [roboticElectricity, setRoboticElectricity] = useState(0);
-  const [roboticMaintenance, setRoboticMaintenance] = useState(0);
-
-  const [traditionalLaborRate, setTraditionalLaborRate] = useState(0);
-  const [traditionalLaborHours, setTraditionalLaborHours] = useState(0);
-
-  const [roboticLaborRate, setRoboticLaborRate] = useState(0);
-  const [roboticLaborHours, setRoboticLaborHours] = useState(0);
-  const [roboticMowingWeeks, setRoboticMowingWeeks] = useState(0);
-
-  const traditionalFuel = traditionalFuelPerEvent * fuelCostPerGallon * traditionalMowingEvents * traditionalMowingWeeks;
-  const traditionalLabor = traditionalLaborRate * traditionalLaborHours * traditionalMowingEvents * traditionalMowingWeeks;
-  const roboticLabor = roboticLaborRate * roboticLaborHours * roboticMowingWeeks;
-
-  const traditionalOperating = traditionalFuel + traditionalLabor + traditionalMaintenance;
-  const roboticOperating = roboticElectricity + roboticLabor + roboticMaintenance;
-
-  const traditionalPerAcre = traditionalCost / acres + traditionalOperating / acres;
-  const roboticPerAcre = roboticCost / acres + roboticOperating / acres;
-  const roiYears = roboticCost / (traditionalOperating - roboticOperating);
-
-  return (
-    <div className="min-h-screen p-6 bg-gray-100 space-y-6">
-      <header className="text-center py-4 bg-green-700 text-white text-2xl font-bold">
-        Golf Course Mowing ROI Calculator
-      </header>
-      <main className="max-w-4xl mx-auto space-y-6">
-        <Card>
-          <CardContent className="space-y-4 p-4">
-            <h2 className="text-lg font-semibold">Input Costs</h2>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label>Traditional Mowing Initial Cost ($)</label>
-                <Input type="number" value={traditionalCost} onChange={(e) => setTraditionalCost(parseFloat(e.target.value) || 0)} />
-              </div>
-              <div>
-                <label>Robotic Mowing Initial Cost ($)</label>
-                <Input type="number" value={roboticCost} onChange={(e) => setRoboticCost(parseFloat(e.target.value) || 0)} />
-              </div>
-              <div>
-                <label>Fuel Consumed per Mowing Event (gallons)</label>
-                <Input type="number" value={traditionalFuelPerEvent} onChange={(e) => setTraditionalFuelPerEvent(parseFloat(e.target.value) || 0)} />
-              </div>
-              <div>
-                <label>Fuel Cost per Gallon ($)</label>
-                <Input type="number" value={fuelCostPerGallon} onChange={(e) => setFuelCostPerGallon(parseFloat(e.target.value) || 0)} />
-              </div>
-              <div>
-                <label>Traditional Mowing Events per Week</label>
-                <Input type="number" value={traditionalMowingEvents} onChange={(e) => setTraditionalMowingEvents(parseFloat(e.target.value) || 0)} />
-              </div>
-              <div>
-                <label>Traditional Mowing Weeks per Year</label>
-                <Input type="number" value={traditionalMowingWeeks} onChange={(e) => setTraditionalMowingWeeks(parseFloat(e.target.value) || 0)} />
-              </div>
-              <div>
-                <label>Traditional Labor Rate ($/hr)</label>
-                <Input type="number" value={traditionalLaborRate} onChange={(e) => setTraditionalLaborRate(parseFloat(e.target.value) || 0)} />
-              </div>
-              <div>
-                <label>Traditional Labor Hours per Mowing Event</label>
-                <Input type="number" value={traditionalLaborHours} onChange={(e) => setTraditionalLaborHours(parseFloat(e.target.value) || 0)} />
-              </div>
-              <div>
-                <label>Robotic Electricity Cost ($/year)</label>
-                <Input type="number" value={roboticElectricity} onChange={(e) => setRoboticElectricity(parseFloat(e.target.value) || 0)} />
-              </div>
-              <div>
-                <label>Robotic Mower Technician Labor Rate ($/hr)</label>
-                <Input type="number" value={roboticLaborRate} onChange={(e) => setRoboticLaborRate(parseFloat(e.target.value) || 0)} />
-              </div>
-              <div>
-                <label>Robotic Mower Tech Maintenance & Troubleshooting Hours per Week</label>
-                <Input type="number" value={roboticLaborHours} onChange={(e) => setRoboticLaborHours(parseFloat(e.target.value) || 0)} />
-              </div>
-              <div>
-                <label>Robotic Mowing Weeks per Year</label>
-                <Input type="number" value={roboticMowingWeeks} onChange={(e) => setRoboticMowingWeeks(parseFloat(e.target.value) || 0)} />
-              </div>
-              <div>
-                <label>Total Acres Maintained</label>
-                <Input type="number" value={acres} onChange={(e) => setAcres(parseFloat(e.target.value) || 1)} />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4 space-y-2">
-            <h2 className="text-lg font-semibold">Results</h2>
-            <p>Traditional Cost per Acre: ${traditionalPerAcre.toFixed(2)}</p>
-            <p>Robotic Cost per Acre: ${roboticPerAcre.toFixed(2)}</p>
-            <p>ROI Break-even (years): {roiYears > 0 ? roiYears.toFixed(2) : "N/A"}</p>
-          </CardContent>
-        </Card>
-      </main>
-      <footer className="text-center py-4 text-gray-600 text-sm">
-        &copy; {new Date().getFullYear()} Golf Course ROI Calculator
-      </footer>
+<div class="container">
+        <h2>Golf Course Mowing ROI Calculator</h2>
+        <div class="input-group">
+            <label>Traditional Mowing Initial Cost ($)</label>
+            <input type="number" id="traditionalCost" value="0" />
+        </div>
+        <div class="input-group">
+            <label>Robotic Mowing Initial Cost ($)</label>
+            <input type="number" id="roboticCost" value="0" />
+        </div>
+        <div class="input-group">
+            <label>Fuel Consumed per Mowing Event (gallons)</label>
+            <input type="number" id="traditionalFuelPerEvent" value="0" />
+        </div>
+        <div class="input-group">
+            <label>Fuel Cost per Gallon ($)</label>
+            <input type="number" id="fuelCostPerGallon" value="0" />
+        </div>
+        <div class="input-group">
+            <label>Traditional Mowing Events per Week</label>
+            <input type="number" id="traditionalMowingEvents" value="0" />
+        </div>
+        <div class="input-group">
+            <label>Traditional Mowing Weeks per Year</label>
+            <input type="number" id="traditionalMowingWeeks" value="0" />
+        </div>
+        <div class="input-group">
+            <label>Traditional Labor Rate ($/hr)</label>
+            <input type="number" id="traditionalLaborRate" value="0" />
+        </div>
+        <div class="input-group">
+            <label>Traditional Labor Hours per Mowing Event</label>
+            <input type="number" id="traditionalLaborHours" value="0" />
+        </div>
+        <div class="input-group">
+            <label>Total Acres Maintained</label>
+            <input type="number" id="acres" value="1" />
+        </div>
+        <button onclick="calculateROI()">Calculate</button>
+        <div class="result" id="results"></div>
     </div>
+    <script>
+        function calculateROI() {
+            let traditionalCost = parseFloat(document.getElementById('traditionalCost').value) || 0;
+            let roboticCost = parseFloat(document.getElementById('roboticCost').value) || 0;
+            let traditionalFuelPerEvent = parseFloat(document.getElementById('traditionalFuelPerEvent').value) || 0;
+            let fuelCostPerGallon = parseFloat(document.getElementById('fuelCostPerGallon').value) || 0;
+            let traditionalMowingEvents = parseFloat(document.getElementById('traditionalMowingEvents').value) || 0;
+            let traditionalMowingWeeks = parseFloat(document.getElementById('traditionalMowingWeeks').value) || 0;
+            let traditionalLaborRate = parseFloat(document.getElementById('traditionalLaborRate').value) || 0;
+            let traditionalLaborHours = parseFloat(document.getElementById('traditionalLaborHours').value) || 0;
+            let acres = parseFloat(document.getElementById('acres').value) || 1;
+            
+            let traditionalFuel = traditionalFuelPerEvent * fuelCostPerGallon * traditionalMowingEvents * traditionalMowingWeeks;
+            let traditionalLabor = traditionalLaborRate * traditionalLaborHours * traditionalMowingEvents * traditionalMowingWeeks;
+            let traditionalOperating = traditionalFuel + traditionalLabor;
+            let traditionalPerAcre = (traditionalCost / acres) + (traditionalOperating / acres);
+            let roboticPerAcre = (roboticCost / acres);
+            let roiYears = roboticCost / (traditionalOperating);
+            
+            document.getElementById('results').innerHTML = `
+                <p>Traditional Cost per Acre: $${traditionalPerAcre.toFixed(2)}</p>
+                <p>Robotic Cost per Acre: $${roboticPerAcre.toFixed(2)}</p>
+                <p>ROI Break-even (years): ${roiYears > 0 ? roiYears.toFixed(2) : "N/A"}</p>
+            `;
+        }
+    </script>
 </body>
 </html>
