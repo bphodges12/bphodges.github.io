@@ -213,9 +213,9 @@
     let traditionalOperating = traditionalFuel + traditionalLabor;
     
     let traditionalPerAcre = acres > 0 ? ((traditionalCost + traditionalOperating) / acres) : 0;
-    let roboticPerAcre = acres > 0 ? (((roboticCost * roboticUnits) + (roboticFuel * roboticUnits) + (roboticMaint * roboticUnits * traditionalMowingWeeks)) / acres) : 0;
+    let roboticPerAcre = acres > 0 ? (((roboticCost * roboticUnits) + (roboticFuel * roboticUnits) + (roboticMaint * roboticUnits * traditionalLaborHours * traditionalMowingWeeks)) / acres) : 0;
     
-    let roiYears = traditionalOperating > 0 ? (roboticCost / traditionalOperating) : "N/A";
+    let roiYears = traditionalOperating > 0 ? (roboticPerAcre / traditionalPerAcre) : "N/A";
 
     document.getElementById('results').innerHTML = `
         <p>Traditional Cost per Acre per Year: $${traditionalPerAcre.toFixed(2)}</p>
